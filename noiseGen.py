@@ -15,6 +15,6 @@ class cosGen:
             self.amplitude = amplitude
             self.freq = freq
             self.sampleRate
-            self.cosData = (amplitude * numpy.cos((2 * numpy.pi) * freq * t) / sampleRate)
+            self.cosData = [(amplitude * numpy.cos((2 * numpy.pi) * freq * t) / sampleRate) for t in range(0, 2048)]
         else:
             return TypeError("Function parameters are of the wrong type")
