@@ -1,41 +1,22 @@
 __author__ = 'Ralph Leyva'
 
-import numpy
+import numpy as np
 import random
 
 
-class sinGen:
-    amplitude = 0
-    freq = 0
-    sampleRate = 0
-    sinData = numpy.array([])
-
-    def __init__(self, amplitude, freq, sampleRate):
-        #Creates
-        if (type(amplitude) == self.amplitude & type(freq) == self, freq & type(sampleRate) == self.sampleRate):
-            self.amplitude = amplitude
-            self.freq = freq
-            self.sampleRate
-            self.sinData = [(amplitude * numpy.sin((2 * numpy.pi) * freq * t) / sampleRate) for t in range(0, 2048)]
-        else:
-            raise TypeError("Function parameters are of the wrong type")
-
-    def sigSum(self, sin1):
-        if type(sin1) == self.sinData:
-            for i in range(0, self.sinData.__sizeof__()):
-                self.sinData[i] = self.sinData[i] + sin1.sinData[i]
-        else:
-            raise TypeError("Function parameters are of the wrong type")
+def sinGen(self, freq):
+    t = None
+    sampleFreq = 44100
+    return [np.cos((2 * np.pi * freq * t) / sampleFreq) for t in range(0, 2 * sampleFreq)]
 
 
-class noiseGen:
-    noiseData = numpy.array([])
+def noiseGen():
+    return sinGen(random.randrange(1, random.random, 1))
 
-    def __init__(self, num, orig):
-        #num corresponds to the numbers of signals that will be combined to generate a noise signal
-        for i in range(0, num):
-            amplitude = random.randrange(1, 20, 0.25)
-            frequency = random.randrange(1000, 100000, 25)
-            sampling = 44100
-            x = sinGen(amplitude, frequency, sampling)
-            x.sigSum(x, orig)
+
+def sinAdd(sin1, sin2):
+    return (sin1 + sin2)
+
+
+def fftGen(sin1):
+    return np.fft(sin1)
