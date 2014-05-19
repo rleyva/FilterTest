@@ -1,5 +1,5 @@
-import pyaudio
 from matplotlib import pyplot
+import collections
 import numpy
 
 
@@ -8,7 +8,7 @@ def shapeTriangle(data):
     return data * triangle
 
 
-def freqPlot(data, rate, freq, ffti, fftr):
+def freqPlot(data, rate, freq, fftr, ffti, fftb):
     # Graphs the data
 
     pyplot.subplot(4, 1, 1)
@@ -42,7 +42,7 @@ def freqPlot(data, rate, freq, ffti, fftr):
     pyplot.show()
 
 
-def soundRec(blocks):
+def soundRec(strm, blocks):
     # Function is called to begin recording sound
     # ---------------Input Vars---------------------
     # blocks: The number if blocks that you want to
@@ -66,29 +66,17 @@ def freqGen(rate, data):
     fftb = 10 * numpy.log10(numpy.sqrt(fft.imag ** 2 + fft.real ** 2))[:len(data) / 2]  # Calculates the mag of the FFT
     freq = numpy.fft.fftfreq(numpy.arange(len(data)).shape[-1])[:len(data) / 2]  # Generates the freq resp of the FFT
     freq = freq * rate / 1000  # Rescales the freq
-    return fft
+    freqData = collections.namedtuple('freqData', 'fft fftb ffti fftr freq')
+    return freqData(fft, fftb, ffti, fftr, freq)
 
 
 def updateGraph(plt, wvData, freqData):
     assert isinstance(plt, pyplot)
+    assert isinstance(wvData, [])
     plt.ion()  # Enables interactive mode
     plt.plot(freqData, wvData)  # Updates the graph data
     plt.draw()  # Renders graph
     return plt
-
-
-CHUNK = 1024
-FORMAT = pyaudio.paInt16
-CHANNELS = 1
-RATE = 44100
-
-p = pyaudio.PyAudio()
-strm = p.open(format=FORMAT,
-              channels=CHANNELS,
-              rate=RATE,
-              input=True,
-              frames_per_buffer=CHUNK)
-soundData = soundRec(1)
 
 
 
