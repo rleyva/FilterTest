@@ -1,6 +1,7 @@
-from matplotlib import pyplot
 import collections
 import numpy
+
+from matplotlib import pyplot
 
 
 def shapeTriangle(data):
@@ -71,8 +72,8 @@ def freqGen(rate, data):
 
 
 def updateGraph(plt, wvData, freqData):
-    assert isinstance(plt, pyplot)
-    assert isinstance(wvData, [])
+    #assert isinstance(plt, pyplot)
+    #assert isinstance(wvData, [])
     plt.ion()  # Enables interactive mode
     plt.plot(freqData, wvData)  # Updates the graph data
     plt.draw()  # Renders graph
